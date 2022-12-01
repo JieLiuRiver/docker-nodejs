@@ -9,15 +9,17 @@ exports.signUp = async (req, res, next) => {
             username,
             password: hashPwd
         });
-        res.status(200).json({
-            staus: 'success',
+        req.session.user = newUser;
+        return res.status(200).json({
+            status: 'success',
             data: {
                 user: newUser
             }
         })
     } catch (error) {
-        res.status(400).json({
-            staus: 'fail'
+        console.log(error)
+        return res.status(400).json({
+            status: 'fail'
         })
     }
 }
@@ -29,29 +31,28 @@ exports.login = async (req, res, next) => {
             username,
         });
         if (!user) {
-            res.status(404).json({
-                staus: 'fail',
+            return res.status(404).json({
+                status: 'fail',
                 message: 'user not found'
             })
         }
 
         const isCorrect = bcrypt.compareSync(password, user.password)
         if (isCorrect) {
-            res.status(200).json({
-                staus: 'success',
-                data: {
-                    user: newUser
-                }
+            req.session.user = user;
+            return res.status(200).json({
+                status: 'success'
             })
         } else {
-            res.status(404).json({
-                staus: 'fail',
+            return res.status(404).json({
+                status: 'fail',
                 message: 'incorrect username or password'
             })
         }
     } catch (error) {
-        res.status(400).json({
-            staus: 'fail'
+        console.log('login error', error)
+        return res.status(400).json({
+            status: 'fail'
         })
     }
 }
