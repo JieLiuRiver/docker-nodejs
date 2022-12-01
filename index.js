@@ -2,6 +2,7 @@ const express = require('express')
 const mongoose = require('mongoose')
 const CONFIG = require('./config/config')
 const postRouter = require('./routers/postRoutes')
+const userRouter = require('./routers/userRoutes')
 
 // 帐号密码
 // docker 分配的 ip 地址
@@ -16,9 +17,10 @@ const port = process.env.PORT || 3000
   
 app.use(express.json());
 // app.get('/', (req, res) => {
-//     res.end('<h1>Hello Docker</h1>')
+//     res.end('<h1>Hello Docker & Node.js</h1>')
 // })
-
+ 
 app.use("/api/v1/posts", postRouter)
+app.use("/api/v1/users", userRouter)
 
 app.listen(port, () => console.log('listening on port ' + port))
