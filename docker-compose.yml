@@ -8,8 +8,7 @@ services:
       - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
   node-app:
     build: .
-    # ports:
-    #   - "3000:3000"
+    image: heliujie/nodeapp1
     environment:
       - PORT=3000
     depends_on:
@@ -19,7 +18,7 @@ services:
     image: mongo
     environment:
       - MONGO_INITDB_ROOT_USERNAME=bode
-      - MONGO_INITDB_ROOT_PASSWORD=bode
+      - MONGO_INITDB_ROOT_PASSWORD=bode 
     volumes:
       - mongo-db:/data/db
 
