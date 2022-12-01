@@ -20,7 +20,8 @@ mongoose.connect(url)
 const app = express()
 
 const port = process.env.PORT || 3000
-  
+
+app.enable("trust proxy");
 app.use(session({
     store: new RedisStore({client: redisClient}),
     secret: CONFIG.SESSION_SECRET,
@@ -33,8 +34,9 @@ app.use(session({
     }
 }))
 app.use(express.json());
-app.get('/', (req, res) => {
+app.get('/api/v1', (req, res) => {
     res.end('<h1>Hello Docker & Node.js</h1>')
+    console.log('hello')
 })
  
 app.use("/api/v1/posts", postRouter)

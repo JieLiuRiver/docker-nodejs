@@ -1,8 +1,11 @@
 version: "3"
 # 每一个容器称为一个服务
 services:
+  nginx:
+    ports:
+      - "3000:80"
   node-app: 
-    build: 
+    build:
       context: .
       args: 
         NODE_ENV: development
