@@ -2,6 +2,7 @@ const express = require('express')
 const mongoose = require('mongoose')
 const session = require('express-session')
 const redis = require('redis')
+const cors = require('cors')
 const CONFIG = require('./config/config')
 const postRouter = require('./routers/postRoutes')
 const userRouter = require('./routers/userRoutes')
@@ -22,6 +23,7 @@ const app = express()
 const port = process.env.PORT || 3000
 
 app.enable("trust proxy");
+app.use(cors({}))
 app.use(session({
     store: new RedisStore({client: redisClient}),
     secret: CONFIG.SESSION_SECRET,
